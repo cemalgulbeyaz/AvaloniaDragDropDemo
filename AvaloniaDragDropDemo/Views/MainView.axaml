@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:AvaloniaDragDropDemo.ViewModels"
+			 xmlns:i="using:Avalonia.Xaml.Interactivity"
+			 xmlns:idd="using:Avalonia.Xaml.Interactions.DragAndDrop"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaDragDropDemo.Views.MainView"
+			 
+             x:DataType="vm:MainViewModel">
+  <Design.DataContext>
+     <!--This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)--> 
+    <vm:MainViewModel />
+  </Design.DataContext>
+
+	<UserControl.Styles>
+		<Style Selector="Grid#gridDropZoneInteractivity">
+			<Style.Resources>
+				<vm:MyDropHandler x:Key="MyDropHandler" />
+			</Style.Resources>
+			<Setter Property="(i:Interaction.Behaviors)">
+				<i:BehaviorCollectionTemplate>
+					<i:BehaviorCollection>
+						<idd:ContextDropBehavior Handler="{StaticResource MyDropHandler}" />
+					</i:BehaviorCollection>
+				</i:BehaviorCollectionTemplate>
+			</Setter>
+		</Style>
+	</UserControl.Styles>
+
+	<Grid x:Name="gridMain" ColumnDefinitions="3* 60* 3*" RowDefinitions="5* 60* 5*">
+		<Grid x:Name="gridDropZones" Grid.Column="1" Grid.Row="1" ColumnDefinitions="* *">
+			<Grid x:Name="gridDropZoneInteractivity" Grid.Column="0" DragDrop.AllowDrop="True" Background="AliceBlue">
+				<TextBlock Text="Avalonia.Xaml.Interactions.DragAndDrop" HorizontalAlignment="Center" Margin="10" Foreground="DarkBlue" />
+			</Grid>
+			<Grid x:Name="gridDropZoneInput" Grid.Column="1" DragDrop.AllowDrop="True" Background="Beige">
+				<TextBlock Text="Avalonia.Input.DragDrop" HorizontalAlignment="Center" Margin="10" Foreground="DarkBlue" />
+			</Grid>
+		</Grid>
+	</Grid>
+</UserControl>
